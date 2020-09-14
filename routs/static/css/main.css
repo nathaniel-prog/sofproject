@@ -1,0 +1,31 @@
+
+
+li {
+color:red
+
+}
+
+body{
+
+background-image: url(israel.png);
+background-repeat: no-repeat;
+
+
+}
+
+.search{
+border: solid, black , 4px;
+width: 50px;
+height: 50px;
+
+
+}
+
+.d{
+color: blue
+}
+
+
+h1 {
+color: red
+}

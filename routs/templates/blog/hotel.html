@@ -1,0 +1,61 @@
+{% extends 'blog/base.html'%}
+{% load static %}
+
+
+{% block content %}
+
+<h1>The {{hotel.name}}</h1>
+
+<p> his cost is {{hotel.cost}} per nigth</p>
+
+<div>
+ <img src="{{ hotel.hotel_Main_Img.url }}" width="300", style="max-height:300px">
+</div>
+
+
+
+<div class="split right">
+<h1> what they said about that hotel</h1>
+ <h3> Comment from {{user}}</h3>
+ {% for comment in comments %}
+ <p> {{comment.comment}}</p>
+
+{% endfor %}
+
+ <H2> make a comment </H2>
+    <div class="form-group">
+    <form method="POST" >
+    <table>
+        {{ form.as_p }}
+    </table>
+    {% csrf_token %}
+    </form>
+
+    <button type="submit">SUBMIT</button>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+

@@ -1,0 +1,26 @@
+
+
+
+{% block content %}
+<h1> REGISTER HERE</h1>
+<div>
+
+
+<form method="POST">
+    <table>
+        {{ form }}
+    </table>
+    {% csrf_token %}
+    <button type="submit">Signup</button>
+</form>
+
+</div>
+
+<div>
+
+    <p> already get an account ? <a href="{% url 'login'%}">login here</a></p>
+</div>
+
+
+{% endblock content %}
+

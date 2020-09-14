@@ -1,0 +1,30 @@
+{% extends 'blog/base.html'%}
+{% load static %}
+
+
+{% block content %}
+
+
+<h1>hotels in {{town.name}} </h1>
+
+
+
+<h4> we have {{count}} result for {{town.name}}</h4>
+<ul>
+    {% for hotel in hotels %}
+  <li>
+      <a href="{% url 'hotel' hotel.id %}"> {{hotel.name}} has  {{hotel.rates}} stars </a>
+
+    </li>
+
+</ul>
+
+{% endfor %}
+
+
+
+
+<a href="{% url 'towns' %}" >Back to towns</a>
+
+
+{% endblock %}

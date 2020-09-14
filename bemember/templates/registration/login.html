@@ -1,0 +1,28 @@
+
+
+<h1>Login</h1>
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+<form method="POST" class="form-group">
+    <table>
+        {{ form|crispy }}
+    </table>
+    {% csrf_token %}
+
+
+     <button type="submit" class="btn btn-success">Login</button>
+
+</form>
+
+
+
+
+
+
+
+
+{% endblock %}
+
+<h1> <a href="{% url 'home' %}"> back to the homepage </a></h1>

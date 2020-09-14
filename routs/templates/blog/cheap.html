@@ -1,0 +1,17 @@
+
+{% extends 'blog/base.html'%}
+{% load static %}
+
+{% block content %}
+
+<H1>thoses hotels are very cheap! </H1>
+{% for money in moneys %}
+<p>{{money.name}} cost only{{money.cost}} per nigth in {{money.town}}</p>
+
+{% endfor %}
+
+
+
+
+
+{% endblock %}

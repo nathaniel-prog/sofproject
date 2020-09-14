@@ -1,0 +1,16 @@
+
+
+<H1> want to advertise for your appartement  ???</H1>
+
+<div class="form-group">
+    <form method="POST" enctype="multipart/form-data">
+    <table>
+        {{ form.as_p }}
+    </table>
+    {% csrf_token %}
+
+    <button type="submit">SUBMIT</button>
+
+</form>
+</div>
+

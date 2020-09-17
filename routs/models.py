@@ -1,7 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
+import datetime
+
+
 
 class Town(models.Model):
-    name= models.CharField(max_length=100, default='Tel-Aviv')
+    name= models.CharField(max_length=100,  unique=True )
+    image_town = models.FileField(default='hotelsample.jpg', upload_to='images/', null=True)
+
 
 
     def __str__(self):
@@ -14,11 +20,15 @@ class Hotels(models.Model):
     town= models.ForeignKey(Town,on_delete=models.CASCADE)
     cost = models.IntegerField( null=False,default=150)
     hotel_Main_Img = models.FileField(default='hotelsample.jpg',upload_to='images/', null= True  )
+    likes= models.ManyToManyField(User, related_name='hotel_as_likes')
 
 
 
     def __str__(self):
         return f" from {self.town}  we have {self.name} "
+
+    def total_like(self):
+        return self.likes.count()
 
 
 class Appartement(models.Model):
@@ -32,6 +42,12 @@ class Appartement(models.Model):
     air_conditioner= models.BooleanField(default=True, null=True)
     comment= models.TextField(max_length=500)
     app_image = models.ImageField(default='hotelsample.jpg', upload_to='images/', null=True)
+
+
+
+
+
+
 
 
 

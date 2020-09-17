@@ -8,6 +8,10 @@
   padding-top: 20px;
 }
 
+.titre{
+ color: white;
+ text-align: center;
+}
 /* Control the left side */
 .left {
   left: 0;

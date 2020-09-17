@@ -1,13 +1,13 @@
-from django.shortcuts import render , redirect
+from django.shortcuts import render , redirect , get_object_or_404
 from django.http import Http404 , HttpResponse
-from bemember.models import *
+from bemember.models import Post
 from .models import Town , Hotels ,Appartement
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import login as auth_login
-from media.images.forms import  HotelForm , AppartForm
-from .forms import CommentForm
-
+from media.images.forms import  HotelForm , AppartForm , RequestForm
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 
 
@@ -16,36 +16,41 @@ from .forms import CommentForm
 
 
 @login_required
-def towns(request ):
-    towns = Town.objects.all()
-    return render(request, 'blog/towns.html', {'towns':towns } )
+def home(request ):
+    towns = Town.objects.all().order_by('id')
+    Jerusalem=Town.objects.get(id=2)
+    return render(request, 'blog/home.html', {'towns':towns ,'Jerusalem':Jerusalem} )
 
 def town(request, town_id):
     try:
-        tow=Town.objects.get(id=town_id)
-        hotels = Hotels.objects.filter(town=tow).all()
-        count = Hotels.objects.filter(town=tow).count()
+        town=Town.objects.get(id=town_id)
+        hotels = Hotels.objects.filter(town=town).all()
+        count = Hotels.objects.filter(town=town).count()
     except Town.DoesNotExist:
       raise Http404(" this town dosn't exist")
 
 
-    return render(request,'blog/town.html',{'town':tow , 'hotels':hotels, 'count': count})
+    return render(request,'blog/town.html',{'town':town , 'hotels':hotels, 'count': count})
 
 
 def hotel(request, hotel_id):
     hotel = Hotels.objects.get(id=hotel_id)
     hotel_pic = Hotels.objects.filter(hotel_Main_Img=hotel)
-    user_comment =Post.objects.filter(comment=User)
-    others= Hotels.objects.exclude(id=hotel_id)
-    return render(request, 'blog/hotel.html',
+    post=Post.objects.all()
 
-    context={'hotel': hotel ,
-             'hotel_pic':hotel_pic,
-             'comments':user_comment,
-             'others':others})
+
+    context = {'hotel': hotel,
+               'hotel_pic': hotel_pic, 'posts':post}
 
 
 
+
+    return render(request, 'blog/hotel.html',context)
+
+
+
+
+    return HttpResponseRedirect(reverse('hotel', args=[str(pk)]))
 
 
 def cheap(request):
@@ -61,14 +66,15 @@ def cheap(request):
 
 
 
-def search(request):
+def search(request , pk):
     query=request.GET.get("q", None)
     towns = Town.objects.all()
+    comments = Post.objects.all()
     qs= Town.objects.all()
     if query is not None:
-        qs.filter(Q(name__icontains=query))
+        qs.filter(Q(name__contains=query))
 
-    return render(request,'blog/search.html', {'towns':towns})
+    return render(request,'blog/search.html', {'towns':towns ,'comments':comments})
 
 
 
@@ -89,28 +95,81 @@ def hotelowner(request):
 
 
 
-
-def display_hotel_images(request):
-    if request.method == 'GET':
-        # getting all the objects of hotel.
-        hotels = Hotels.objects.all()
-        return render(request, 'blog/display_hotel_images.html', {'hotel_images': hotels})
-
-
-
-
-
-
 def myappart(request):
-    if request.method == 'GET':
-        form = AppartForm()
-        return render(request, 'blog/myappart.htmL', {'form': form})
-
+    budget = Appartement.objects.filter(cost__lt=260)
     if request.method == 'POST':
-        form = AppartForm(request.POST)
+        form = AppartForm(request.POST,request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('towns')
+            app_image_vieuw = form.instance
+
+        return render(request, 'blog/myappart.htmL', {'form': form, 'img_obj': app_image_vieuw ,'budgets':budget })
+    else:
+        form = AppartForm()
+    return render(request, 'blog/myappart.htmL', {'form': form})
+
+
+
+
+def notation(request):
+    post=Post.objects.all()
+    user= request.user
+    context={"posts":post,
+             "users":user}
+
+
+    return render(request, 'blog/notation.html', context)
+
+
+
+def appartements(request):
+    app=Appartement.objects.all().order_by('cost')
+
+    return render(request,'blog/appartements.html', {'appartements':app,} )
+
+
+def display_hotel_images(request,pk):
+    town=Town.objects.get(id=pk)
+    data= Hotels.objects.get(town=town)
+
+    return render(request, 'blog/display_hotel_images.html', {'data':data})
+
+
+
+def LikeViews(request,pk):
+    hot=get_object_or_404(Hotels,id=request.POST.get('hotel_id'))
+    hot.likes.add(request.user)
+    return HttpResponseRedirect(reverse('hotel', args=[str(pk)]))
+
+def all_post(request):
+    post=Post.objects.all()
+    return render(request,'blog/allpost.html', {'posts':post})
+
+
+def look_app(request):
+    lbudget = Appartement.objects.filter(cost__lt=200)
+    hbudget = Appartement.objects.filter(cost__gt=500)
+    telaviv= Town.objects.get(id=1)
+    el_se=Town.objects.all()
+
+    if request.method == 'POST':
+        form = RequestForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            app_image_vieuw = form.instance
+
+        return render(request, 'blog/look_app.htmL', {'form': form, 'img_obj': app_image_vieuw, 'lbudgets': lbudget , 'hbudgets':hbudget,'tel-aviv':telaviv ,'else':el_se})
+    else:
+        form = RequestForm()
+    return render(request, 'blog/look_app.htmL', {'form': form})
+
+
+
+
+
+
+
+
 
 
 

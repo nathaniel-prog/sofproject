@@ -11,15 +11,18 @@ class MyProfile(models.Model):
 
 
 class Post(models.Model):
-    comment= models.CharField(max_length=150,default='it was nice', null=True)
+    titre= models.CharField(max_length=150,default='it was nice', null=True)
     author= models.ForeignKey(User,on_delete=models.CASCADE)
     body= models.TextField(default='whats in your mind ')
     post_date=models.DateField(default=datetime.date.today())
-    likes= models.ManyToManyField(User , related_name='blog_post')
+    likes= models.ManyToManyField(User , related_name='hotel_like')
 
 
     def __str__(self):
-        return f' you said:{self.comment} '
+        return f' {self.author} has said {self.titre} '
+
+    def total_like(self):
+        return self.likes.count()
 
 
 

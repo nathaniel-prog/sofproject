@@ -6,7 +6,7 @@ from .forms import PersonForm, MyUserCreationForm
 
 
 def home(request):
-    return render(request,'profile/home.html')
+    return render(request,'profile/welcome.html')
 
 
 def log_in(request):
@@ -26,7 +26,7 @@ def register(request):
         if form.is_valid():
             user = form.save()  # Saves out new user to the database
             auth_login(request, user)
-            return redirect('towns')
+            return redirect('home')
 
 
 

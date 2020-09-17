@@ -2,8 +2,11 @@
 
 <H1> want to advertise for an hotels ???</H1>
 
+
+
+<h3> fill the form to you can get your information  in the database</h3>
 <div class="form-group">
-    <form method="POST" , enctype="multipart/form-data">>
+    <form method="POST" , enctype="multipart/form-data" class="ui form">>
     <table>
         {{ form.as_p }}
     </table>
@@ -18,3 +21,5 @@
   <img src="{{ img_obj.hotel_Main_Img.url}}" alt="connect" style="max-height:300px">
 {% endif %}
 
+
+<button ><a href="{% url 'home' %} "> homepage </button>

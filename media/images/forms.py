@@ -18,7 +18,15 @@ class HotelForm(forms.ModelForm):
 class AppartForm(forms.ModelForm):
     class Meta:
         model= Appartement
-        fields=['town', 'cost', 'mirpeset', 'parking', 'air_conditioner','comment','pieces','surface', 'app_image' ]
+        fields=['town', 'cost', 'mirpeset','address', 'pieces','surface', 'app_image' ]
+
+
+class RequestForm(forms.ModelForm):
+    class Meta:
+        model= Appartement
+        fields=['town', 'cost', 'mirpeset', 'pieces','surface', 'app_image' ]
+
+
 
 
 

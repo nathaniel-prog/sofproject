@@ -1,0 +1,35 @@
+
+
+<h1> We want to help you to find our best choice </h1>
+
+
+<h3> Please fill the form to anderstand your request</h3>
+
+<div class="form-group">
+    <form method="POST" enctype="multipart/form-data">
+    <table>
+        {{ form.as_p }}
+    </table>
+    {% csrf_token %}
+
+    <button type="submit">SUBMIT</button>
+
+</form>
+</div>
+
+
+{% if lbudgets %}
+  <h3>You are too short   go to moshavims  <a href="{% url 'cheap' %} "></a> cheap page </h3>
+
+
+{% elif hbudgets %}
+<h3> we have beautiful appartements to showing you </h3>
+
+{% elif else %}
+<h3> thanks we looking ...BUT FOR NOW CHANA TOVA DI </h3>
+
+
+{% endif %}
+
+
+<button ><a href="{% url 'home' %} "> homepage </button>

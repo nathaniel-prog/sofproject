@@ -12,29 +12,22 @@
  <img src="{{ hotel.hotel_Main_Img.url }}" width="300", style="max-height:300px">
 </div>
 
-
+<b> {{test}}</b>
 
 <div class="split right">
 <h1> what they said about that hotel</h1>
  <h3> Comment from {{user}}</h3>
- {% for comment in comments %}
- <p> {{comment.comment}}</p>
+ {% for post in posts %}
+ <p> {{post.title}}from {{post.author}}</p>
 
 {% endfor %}
+</div>
 
- <H2> make a comment </H2>
-    <div class="form-group">
-    <form method="POST" >
-    <table>
-        {{ form.as_p }}
-    </table>
-    {% csrf_token %}
-    </form>
 
-    <button type="submit">SUBMIT</button>
-
-    </div>
-
+<form action="{% url  'like_hotel' hotel.id   %}" method="POST">
+    {%csrf_token%}
+    <button type="submit", name="hotel_id", value="{{hotel.id}}", class="btn btn-primary btn-sm"> like</button> {{count}}likes
+</form>
 
 
 

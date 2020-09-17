@@ -13,7 +13,7 @@
 
 <h3> welcome {{user}}</h3>
 
-<h3> more of thousand hotels around Israel</h3>
+
 
 <form>
   <div class="form-group">
@@ -33,6 +33,17 @@
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+
+ <h3> Comment from {{user}}</h3>
+ {% for comment in comments %}
+ <p> {{comment.comment}}</p>
+
+{% endfor %}
+
+
+
+
 
 
 

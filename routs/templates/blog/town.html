@@ -9,17 +9,22 @@
 
 
 
+
 <h4> we have {{count}} result for {{town.name}}</h4>
 <ul>
     {% for hotel in hotels %}
   <li>
-      <a href="{% url 'hotel' hotel.id %}"> {{hotel.name}} has  {{hotel.rates}} stars </a>
+      <a href="{% url 'hotel' hotel.id %}"> {{hotel.name}} has  {{hotel.rates}} <i class="far fa-star"></i> </a>
 
     </li>
 
 </ul>
 
 {% endfor %}
+
+
+
+
 
 
 

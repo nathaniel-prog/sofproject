@@ -1,17 +1,13 @@
 
 
-li {
+li{
 color:red
+position : rigth
+inline
 
 }
 
-body{
 
-background-image: url(israel.png);
-background-repeat: no-repeat;
-
-
-}
 
 
 

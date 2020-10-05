@@ -1,13 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 import datetime
 
-
+d= datetime.date.today()
 
 class Town(models.Model):
     name= models.CharField(max_length=100,  unique=True )
     image_town = models.FileField(default='hotelsample.jpg', upload_to='images/', null=True)
-
 
 
     def __str__(self):
@@ -16,12 +16,10 @@ class Town(models.Model):
 
 class Hotels(models.Model):
     name= models.CharField(max_length=300)
-    rates= models.IntegerField(null= True)
+    rates= models.IntegerField(null= True )
     town= models.ForeignKey(Town,on_delete=models.CASCADE)
     cost = models.IntegerField( null=False,default=150)
     hotel_Main_Img = models.FileField(default='hotelsample.jpg',upload_to='images/', null= True  )
-    likes= models.ManyToManyField(User, related_name='hotel_as_likes')
-
 
 
     def __str__(self):
@@ -42,6 +40,14 @@ class Appartement(models.Model):
     air_conditioner= models.BooleanField(default=True, null=True)
     comment= models.TextField(max_length=500)
     app_image = models.ImageField(default='hotelsample.jpg', upload_to='images/', null=True)
+
+    def __str__(self):
+        return f" {self.address} cost {self.cost}"
+
+
+
+
+
 
 
 

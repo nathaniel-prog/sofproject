@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>List of appartments</h2>
+    <ul>
+
+
+
+        {% for appart in object_list %}
+        <li><a href="{% url 'appart' appart.id %}">{{ appart.town }}and  {{appart.id}} and {{ appart.cost}}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

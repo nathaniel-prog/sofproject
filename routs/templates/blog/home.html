@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+
 <h3> Welcome {{user}} </h3>
 
 
@@ -33,7 +34,7 @@
 
 <div class="format-pic">
     <a href="http://localhost:8000/town/2">
-    <img src="../static/css/Jerusalem.jpg" style="max-height:300px"><b>Jerusalem</b>
+    <img src="../static/css/Jerusalem.jpg" style="max-height:200px"><b>Jerusalem</b>
          </a>
 
 </div>
@@ -45,7 +46,7 @@
 
     <div class="format-pic">
         <a href="{% url 'town' town.id %}" >
-            <img class="photo" src="{{town.image_town.url}}" style="max-height:300px" > <b>{{town.name}}</b>
+            <img class="photo" src="{{town.image_town.url}}"   > <b>{{town.name}}</b>
 
         </a>
     </div>
@@ -62,7 +63,6 @@
 
 
 </div>
-
 
 
 <button type="submit">

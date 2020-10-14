@@ -4,12 +4,14 @@ from django.http import Http404 , HttpResponse
 from bemember.models import Post
 from .models import Town , Hotels ,Appartement , User
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
 from django.contrib.auth import login as auth_login
-from media.images.forms import  HotelForm , AppartForm , RequestForm
+from media.images.forms import  HotelForm , AppartForm , RequestForm , PostForm
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import ListView, DetailView , CreateView
+
+import json
 
 
 
@@ -22,11 +24,21 @@ from django.views.generic import ListView, DetailView , CreateView
 
 def home(request ):
     towns = Town.objects.all().order_by('id')
-    Jerusalem=Town.objects.get(id=2)
+    appartments = Appartement.objects.all()
+
+    tlv= Town.objects.get(id=1)
+    count_htlv= Hotels.objects.filter(town__name='tel-aviv').count()
+    best_hotel= Hotels.objects.filter(rates__gt=5)
+
+
+    context={'towns':towns,'count_htlv':count_htlv, 'tlv':tlv ,  'appartments':appartments, 'besthotels':best_hotel}
 
 
 
-    return render(request, 'blog/home.html', {'towns':towns ,'Jerusalem':Jerusalem} )
+
+
+
+    return render(request, 'blog/home.html', context )
 
 def town(request, town_id):
     try:
@@ -42,9 +54,17 @@ def town(request, town_id):
 
 
 def LikeViews(request,pk):
-    hot=get_object_or_404(Hotels,id=request.POST.get('hotel_id'))
-    hot.likes.add(request.user)
-    return HttpResponseRedirect(reverse('hotel', args=[str(pk)]))
+   hot=get_object_or_404(Appartement,id=request.POST.get('appart_id'))
+   hot.likes.add(request.user)
+   return HttpResponseRedirect(reverse('appart', args=[str(pk)]))
+
+
+def Show_number(request,pk):
+   hot=get_object_or_404(Appartement,id=request.POST.get('appart_id'))
+   hot.air_conditionner.add(request.user)
+   return HttpResponseRedirect(reverse('appartement', args=[str(pk)]))
+
+
 
 
 
@@ -53,10 +73,10 @@ def hotel(request, hotel_id):
     hotel = Hotels.objects.get(id=hotel_id)
 
     hotel_pic = Hotels.objects.filter(hotel_Main_Img=hotel)
-    nbroflike= Hotels.objects.filter(likes=hotel_id).count
+
 
     context = {'hotel': hotel,
-               'hotel_pic': hotel_pic,   'counts': nbroflike }
+               'hotel_pic': hotel_pic,  }
     return render(request, 'blog/hotel.html',context)
 
 
@@ -119,6 +139,7 @@ def myappart(request):
             form.save()
             app_image_view = form.instance
 
+
         return render(request, 'blog/myappart.htmL', {'form': form, 'img_obj': app_image_view ,'budgets':budget })
     else:
         form = AppartForm()
@@ -140,11 +161,11 @@ def notation(request):
 
 def appartements(request):
     app=Appartement.objects.all().order_by('cost')
-    cont={ 'name': 'nathan',
-           'age' : 31}
 
 
-    return render(request,'blog/appartements.html', {'appartements':app, 'fou': cont['age'] })
+
+
+    return render(request,'blog/appartements.html', {'appartements':app  })
 
 
 
@@ -190,6 +211,12 @@ class PostHotel(ListView):
     template_name = 'blog/hotel.html'
     context_object_name = 'posts'
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+
+        return super().form_valid(form)
+
+
 
 
 
@@ -202,18 +229,39 @@ class ListAppart(ListView):
     template_name = 'blog/appartement_list.html'
 
 
+    def search(self,query=None):
+        qs=self
+        if query is not None:
+            or_lookup=(Q)
+
+
+
+
+
 class DetailAppartViews(DetailView):
-    queryset = Appartement.objects.all()
     model = Appartement
     template_name = 'blog/appartement_detail.html'
 
 
+    def get_context_data(self, *args,**kwargs):
+        context=super(DetailAppartViews, self).get_context_data()
+        stuff = get_object_or_404(Appartement, id=self.kwargs['pk'])
+        total_likes = stuff.totalikes()
+        context['totalikes']= total_likes
+        return context
+
+
+
+
+
+
 class PostCreateView(CreateView):
     model=Post
-    fields = ['titre', 'body']
+    fields = ['titre', 'body','author']
     template_name = 'blog/post_form.html'
 
     def form_valid(self, form):
+
         form.instance.author = self.request.user
         return super().form_valid(form)
 

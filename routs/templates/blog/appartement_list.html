@@ -7,7 +7,17 @@
 
 
         {% for appart in object_list %}
-        <li><a href="{% url 'appart' appart.id %}">{{ appart.town }}and  {{appart.id}} and {{ appart.cost}}</a></li>
+        <li><a href="{% url 'appart' appart.id %}">{{ appart.town }}and  {{appart.id}} </a></li>
         {% endfor %}
     </ul>
+
+<form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{{user}}</button>
+    </form>
+
+
+
+
+
 {% endblock %}

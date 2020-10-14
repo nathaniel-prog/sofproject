@@ -20,12 +20,13 @@
 
 
 </div>
-<form method="POST">
-     {%csrf_token%}
-    <input type="text" name="q"  value= 'hotel_id"  placeholder="your comment" >
-    <input TYPE="submit" value="save"/>
 
-</form>
+
+<form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search" aria-label="Search">
+    {% csrf_token %}
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">submit</button>
+    </form>
 
 {% for post in posts %}
 <table>
@@ -35,13 +36,6 @@
 
 </table>
 {% endfor %}
-
-
-<form action="{% url  'like_hotel' hotel.id   %}" method="POST">
-    {%csrf_token%}
-    <button type="submit", name="hotel_id", value="{{hotel.id}}", class="btn btn-primary btn-sm"> like</button>{{counts}} likes
-</form>
-
 
 
 

@@ -9,15 +9,27 @@
 {% block content %}
 
 {% for appartement in appartements %}
+<br>
 
-<b> {{appartement.town}} , adresse:{{appartement.address}} , {{appartement.pieces}} rooms, {{appartement.cost}}/nigth, parking: {{appartement.parking}},</b>
+<h4> {{appartement.town}} , adresse:{{appartement.address}} ,</h4>
+
+<br>
 
 <div>
     <img src="{{ appartement.app_image.url}}" style="max-height:300px">
+<form action="{% url  'show_num' appartement.id   %}" method="POST">
+    {%csrf_token%}
+    <button type="submit", name="appart_id", value="{{appartement.id}}", class="btn btn-primary btn-sm"> number</button>
 
-
+</form>
+{% if number %}
 </div>
+<h5>{{appartement.pieces}} rooms, {{appartement.cost}}/nigth, parking: {{appartement.parking}}</h5>
 
+<br>
+<hr>
+
+{% endif %}
 
 
 {% endfor %}

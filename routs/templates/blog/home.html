@@ -8,6 +8,7 @@
 
 
 
+
 <h3> more of thousand hotels and apartments for you around Israel</h3>
 
 <a href="{% url 'myappart' %}">
@@ -20,9 +21,9 @@
 
 <br>
 <br>
-<ul>
+<ul >
     {% for town in towns  %}
-    <button  type="button"  class="btn">
+    <button  type="button"  class="btn-btn">
         <a href="{% url 'town' town.id %}" > {{town.id}} {{town.name}} </a>
     </button>
     {% endfor %}
@@ -30,47 +31,161 @@
 
 <hr>
 <br>
-<h3>  </h3>
 
-<div class="format-pic">
+<div class="row">
+    <div class="col-md-4">
+        <div class="format-pic">
     <a href="http://localhost:8000/town/2">
-    <img src="../static/css/Jerusalem.jpg" style="max-height:200px"><b>Jerusalem</b>
-         </a>
+    <img src="../static/css/Jerusalem.jpg" style="max-height:300px"> <b>Jerusalem</b>
+    </a>
+
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="format-pic">
+    <a href="http://localhost:8000/town/14">
+    <img src="../static/css/haifa.jpg" style="max-height:300px"> <b> Haifa</b>
+
+    </a>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="format-pic">
+    <a href="http://localhost:8000/town/6">
+    <img src="../static/css/EILAT.jpg" style="max-height:300px"><b>Eilat</b>
+    </a>
+        </div>
+
+    </div>
+
 
 </div>
+
+<hr>
+
+<h2> and a lot of appartments</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="format-pic">
+    <a href="http://localhost:8000/list_app/40">
+    <img src="../static/css/images/app_moshav_LaAEE41_9XHR1GO.jpg " style="max-height:300px">
+    </a>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="format-pic">
+    <a href="http://localhost:8000/list_app/39">
+    <img src="../static/css/images/app_Jeru1.jpg" style="max-height:300px">
+    </a>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="format-pic">
+    <a href="http://localhost:8000/list_app/38">
+    <img src="../static/css/images/apptlv.jpg" style="max-height:300px">
+
+    </a>
+        </div>
+    </div>
+</div>
+
+
+
+
+</div>
+
+</div>
+
+<hr>
+<br>
+
+
+<h3>Our favorite choice !! </h3>
+<br>
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="format-pic">
+<a href="http://localhost:8000/hotel/63">
+    <img src="../static/css/images/tb.jpg " style="max-height:500px" , width="400">
+</a>
+
+        </div>
+        <div class="desc">
+        <b> the <i>Yarden Galil Hotel </i> (5 stars) is beautiful for only 400 nis/nigth</b>
+
+    </div>
+    </div>
+
+
+    <div class="col-md-6">
+        <div class="format-pic">
+            <a href="http://localhost:8000/hotel/70">
+                <img src="../static/css/images/jerusalem_hotel.jpg" style="max-height:300px">
+            </a>
+
+        </div>
+        <div class="desc">
+            <b> the <i>kadosh hotel</i> is so far the best hotel of the capital</b>
+    </div>
+    </div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<hr>
+<br>
+
+
  {% for town in towns  %}
+<div class="row">
 
 
+{% if tlv  in towns%}
+    <div class="col-md-2">
 
-<div>
-
-    <div class="format-pic">
         <a href="{% url 'town' town.id %}" >
-            <img class="photo" src="{{town.image_town.url}}"   > <b>{{town.name}}</b>
+            <img class="photo" src="{{town.image_town.url}}" , style="max-height:300px">   <b>{{town.name}}</b>
 
         </a>
     </div>
+{% endif %}
+</div>
     {% endfor %}
 
 
 
 
-</div>
-
-
-<div>
 
 
 
-</div>
 
 
-<button type="submit">
+
+<button type="submit" class="btn">
   <a href="{% url 'logout' %}"> logout </a>
 </button>
+
+</div>
 
 
 
 
 
 {% endblock %}
+
+

@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'routs','bemember' ,
     'crispy_forms','faker',
-    'caland'
+    'caland', 'django_filters',
 ]
 
 LOGIN_URL = 'login'

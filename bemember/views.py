@@ -2,11 +2,13 @@ from django.shortcuts import render , redirect
 from django.contrib.auth import login as auth_login , authenticate
 from .models import Post
 from .forms import PersonForm, MyUserCreationForm
+from .models import User
 
 
 
 def home(request):
-    return render(request,'profile/welcome.html')
+    counts= User.objects.all().count
+    return render(request,'profile/welcome.html',{'counts':counts})
 
 
 def log_in(request):

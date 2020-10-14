@@ -25,8 +25,7 @@ class Hotels(models.Model):
     def __str__(self):
         return f" from {self.town}  we have {self.name} "
 
-    def total_like(self):
-        return self.likes.count()
+   
 
 
 class Appartement(models.Model):
@@ -40,6 +39,11 @@ class Appartement(models.Model):
     air_conditioner= models.BooleanField(default=True, null=True)
     comment= models.TextField(max_length=500)
     app_image = models.ImageField(default='hotelsample.jpg', upload_to='images/', null=True)
+    likes= models.ManyToManyField(User, related_name='Appart_like')
+
+
+    def totalikes(self):
+        return self.likes.count()
 
     def __str__(self):
         return f" {self.address} cost {self.cost}"

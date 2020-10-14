@@ -1,7 +1,7 @@
 from django.urls import path
 from . views import *
 from . import views
-from .views import LikeViews , ListAppart , DetailAppartViews , PostHotel, PostCreateView
+from .views import   ListAppart , DetailAppartViews , PostHotel, PostCreateView , LikeViews,Show_number
 from media.images import forms
 from django.conf import settings
 from django.conf.urls.static import static
@@ -14,10 +14,13 @@ urlpatterns = [
     path('hotel/<int:hotel_id>', views.hotel, name='hotel'),
     path('search',views.search, name='search'),
     path('hotelowner',views.hotelowner,name='hotelowner'),
+    path('like/<int:pk>',LikeViews,name='like_app'),
+    path('show/<int:pk>',LikeViews,name='show_num'),
+
 
     path('myappart',views.myappart, name='myappart'),
     path('cheap',views.cheap, name='cheap'),
-    path('like/<int:pk>', LikeViews , name='like_hotel'),
+
     path('notation',views.notation , name= 'notation'),
     path('appartement',views.appartements, name='appartements'),
     path('post',views.all_post , name= 'post'),

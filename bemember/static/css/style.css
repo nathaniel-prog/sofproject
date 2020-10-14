@@ -15,7 +15,7 @@
 /* Control the left side */
 .left {
   left: 0;
-  background-color: grey;
+
 }
 
 /* Control the right side */
@@ -24,6 +24,24 @@
   background-color: red;
 }
 
+body{
+  background-color : green ;
+}
+
+.container{
+
+  width: 90 uv
+  height: 100%
+
+}
+
+.bemember {
+  border : solid , black , 1px
+  width: 150 px
+  height: 110 px
+}
+
+
 /* If you want the content centered horizontally and vertically */
 .centered {
   position: absolute;
@@ -31,4 +49,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+}
+
+h2{
+color : red ;
 }

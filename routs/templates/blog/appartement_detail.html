@@ -2,9 +2,35 @@
 
 
 
-<h1> for more detail</h1>
+<h1>  more detail for appartment number {{ object.id}}</h1>
 
-{% for appart in object_list %}
-<h3>{{ appart.address}} {{ appart.pieces}}</h3>
+<h3> town:{{object.town}} </h3>
+<h3> address: {{object.address}}</h3>
 
-{% endfor %}
+
+    <img src="{{ object.app_image.url}}" alt="connect" style="max-height:300px">
+    <h3> comment : {{object.comment}}</h3>
+
+<h3>  </h3>
+<div>
+    <h3> parking :{{object.parking}}</h3>
+    <h3> balcon : {{object.mirpeset}}</h3>
+
+
+
+</div>
+
+<form action="{% url  'like_app' appartement.id   %}" method="POST">
+    {%csrf_token%}
+    <button type="submit", name="appart_id", value="{{appartement.id}}", class="btn btn-primary btn-sm"> like</button>{{totalikes}} likes
+</form>
+
+
+
+
+
+<button type="button" > <a href="{% url 'home'  %}"> back to home </button>
+
+
+
+

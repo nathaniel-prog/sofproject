@@ -7,7 +7,7 @@ dt_mtn=datetime.datetime.now(tz=pytz.timezone('Asia/Jerusalem'))
 #print(dt_mtn.strftime('%B %d,%Y'))
 dt_str= 'September 11,2020'
 dt=datetime.datetime.strptime(dt_str,'%B %d,%Y')
-#print(dt)
+print(dt)
 # strftime= convert a datetime to str
 # strptime= convert a str to a datztimd
 
@@ -18,7 +18,7 @@ dt=datetime.datetime.strptime(dt_str,'%B %d,%Y')
 
 
 class Trip(models.Model):
-    start_date= models.DateField()
+    start_date= models.DateField(default=dt_mtn)
     end_date = models.DateField()
 
 

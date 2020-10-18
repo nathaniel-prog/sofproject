@@ -7,11 +7,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login
 from media.images.forms import  HotelForm , AppartForm , RequestForm , PostForm
 from django.db.models import Q
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import ListView, DetailView , CreateView
 
-import json
 
 
 
@@ -61,7 +61,8 @@ def LikeViews(request,pk):
 
 def Show_number(request,pk):
    hot=get_object_or_404(Appartement,id=request.POST.get('appart_id'))
-   hot.air_conditionner.add(request.user)
+   hot.air_conditioner.add(request.user)
+
    return HttpResponseRedirect(reverse('appartement', args=[str(pk)]))
 
 
@@ -98,19 +99,23 @@ def cheap(request):
 
 
 def search(request ):
-    context = {}
 
-    if request.GET:
-        kwarg=request.GET["q"]
-        context['kwarg']= str(kwarg)
-        if kwarg is not None:
-            context = {"Jerusalem": ["capital", 'historic town', 'touristic town', 600000],
-                       'netanya': 'touristic town',
-                       'haifa': 3}
+    if request.method=='POST':
+        query=request.POST["q"]
+
+        if query:
+            qs=Hotels.objects.filter(Q(name__icontains=query)
+                               )
+            if qs:
+                return render(request,'blog/search.html',{'results':qs})
+            else:
+                messages.error(request,'no result found')
+        else:
+            return HttpResponseRedirect('search')
 
 
 
-    return render(request,'blog/search.html', {'kwarg': context})
+    return render(request,'blog/search.html')
 
 
 
@@ -165,7 +170,8 @@ def appartements(request):
 
 
 
-    return render(request,'blog/appartements.html', {'appartements':app  })
+
+    return render(request,'blog/appartements.html', {'appartements':app })
 
 
 
@@ -230,9 +236,12 @@ class ListAppart(ListView):
 
 
     def search(self,query=None):
-        qs=self
-        if query is not None:
-            or_lookup=(Q)
+        requet= self.request.user
+        if query is not None :
+            requet=query
+            return requet
+
+
 
 
 
@@ -241,7 +250,6 @@ class ListAppart(ListView):
 class DetailAppartViews(DetailView):
     model = Appartement
     template_name = 'blog/appartement_detail.html'
-
 
     def get_context_data(self, *args,**kwargs):
         context=super(DetailAppartViews, self).get_context_data()
@@ -257,13 +265,15 @@ class DetailAppartViews(DetailView):
 
 class PostCreateView(CreateView):
     model=Post
-    fields = ['titre', 'body','author']
+    fields = ['titre', 'body','author', 'post_date']
     template_name = 'blog/post_form.html'
 
     def form_valid(self, form):
-
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+
 
 
 

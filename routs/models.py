@@ -1,9 +1,38 @@
 from django.db import models
 from django.contrib.auth.models import User
+from bemember.models import Post
+from django.db.models import Q
 
 import datetime
 
 d= datetime.date.today()
+
+
+class PostquerySet(models.QuerySet):
+    def search(self,query=None):
+        qs=self
+        if query is not None:
+            or_lookup= (Q(name__icontains=query)|
+                        Q(address__icontains=query)|
+                        Q(town__icontains=query))
+
+            qs=qs.filter(or_lookup).distinct()
+            return qs
+
+class PostManager(models.Manager):
+    def get_queryset(self):
+        return PostquerySet(self.model, using=self._db)
+
+    def search(self,query=None):
+        return self.get_queryset().search(query=query)
+
+
+
+
+
+
+
+
 
 class Town(models.Model):
     name= models.CharField(max_length=100,  unique=True )

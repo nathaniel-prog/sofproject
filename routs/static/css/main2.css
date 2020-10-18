@@ -6,9 +6,16 @@ inline ;
 
 }
 
-body {
-  background-color: blue ;
+.top-home {
+
+padding : 50px ;
+position : center ;
+
+
+
 }
+
+
 
 
 .button1 {
@@ -62,19 +69,30 @@ outline: #4CAF50 solid 10px;
 
 }
 
+.col-md-2 {
+margin: 50 px ;
+padding: 20 px ;
+
+}
+
+
+
 
 div.gallery {
   border: 1px solid #ccc;
 }
 
 .col-md-6 {
-  width: 1000%;
+  width: 100%;
   height: auto;
+
 }
 
 .format-pic {
   margin-left: 50px
-  border:2px solid #ccc;
+  border: 2px solid #ccc;
+  padding: 3px;
+
 
 }
 
@@ -88,3 +106,5 @@ div.gallery {
   padding: 15px;
   text-align: center;
 }
+
+

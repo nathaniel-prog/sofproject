@@ -13,43 +13,54 @@
 
 <h3> welcome {{user}}</h3>
 
+<br>
+<br>
 
-
-
-<form method="POST">
+<div class="container">
+    <form method="POST" action="/search">
      {%csrf_token%}
-    <input type="text" name="q" placeholder="your comment">
-    <input TYPE="submit" value="save"/>
+    <div class="form-group">
+        <div class="col-lg-5">
+    <input type="text" name="q" class="form-control" placeholder="search">
+        </div>
+        <label class="col-lg-2">
+            <button type="submit" class="btn btn-danger">Search</button>
 
+        </label>
 
-</form>
+    </div>
+    </form>
 
-<p>{{kwarg}}</p>
-
-{% for town in towns %}
-
-<h3> TOWNS</h3>
-
-
- <p> {{town.name}}</p>
-
-{% endfor %}
-
-
-
-
-
-
-
-
-<ul>
-    {% for town in towns  %}
-    <li>
-        <a href="{% url 'town' town.id %}" > {{town.id}} {{town.name}} </a>
-    </li>
-    {% endfor %}
+</div>
+<div>
+{% if messages %}
+<ul class="message">
+   {% for message in messages %}
+	   <li style="color:red">{{ message }}</li>
+   {% endfor %}
 </ul>
+{% endif %}
 
+
+</div><br>
+<div style="color:blue">
+    {% if results %}
+    {% for result in results %}
+    <table>
+        <tr>
+            <td>name:{{result.name}}</td>
+            <td>cost:{{result.cost}}</td>
+            <td>town:{{result.town}}</td>
+        </tr>
+    </table>
+
+    {% endfor %}
+
+
+
+
+</div>
+{% endif %}
 
 
 {% endblock %}

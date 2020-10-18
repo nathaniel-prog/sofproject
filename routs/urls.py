@@ -15,7 +15,7 @@ urlpatterns = [
     path('search',views.search, name='search'),
     path('hotelowner',views.hotelowner,name='hotelowner'),
     path('like/<int:pk>',LikeViews,name='like_app'),
-    path('show/<int:pk>',LikeViews,name='show_num'),
+    path('show/<int:pk>',Show_number,name='show_num'),
 
 
     path('myappart',views.myappart, name='myappart'),

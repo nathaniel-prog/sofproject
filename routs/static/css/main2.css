@@ -63,15 +63,14 @@ outline: #4CAF50 solid 10px;
 .row{
   border: 2px solid #ccc;
   margin-left: 50px
-
-  margin: auto;
   padding: 20px;
 
 }
 
 .col-md-2 {
-margin: 50 px ;
+
 padding: 20 px ;
+position: center ;
 
 }
 
@@ -89,7 +88,7 @@ div.gallery {
 }
 
 .format-pic {
-  margin-left: 50px
+  margin-left: 100px
   border: 2px solid #ccc;
   padding: 3px;
 

@@ -15,7 +15,8 @@ urlpatterns = [
     path('search',views.search, name='search'),
     path('hotelowner',views.hotelowner,name='hotelowner'),
     path('like/<int:pk>',LikeViews,name='like_app'),
-    path('show/<int:pk>',Show_number,name='show_num'),
+    path('show<int:pk>',Show_number, name='show_number'),
+
 
 
     path('myappart',views.myappart, name='myappart'),
@@ -25,7 +26,7 @@ urlpatterns = [
     path('appartement',views.appartements, name='appartements'),
     path('post',views.all_post , name= 'post'),
     path('look_app', views.look_app ,name='look_app'),
-    path('list_app',ListAppart.as_view()),
+    path('list_app',ListAppart.as_view() , name='app'),
     path('list_app/<int:pk>', DetailAppartViews.as_view(), name= 'appart'),
     path('posts', PostHotel.as_view()),
     path('posts/new',PostCreateView.as_view(), name= 'postview')

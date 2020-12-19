@@ -14,7 +14,7 @@ from routs.models import Town , Hotels
 
 data_fake= Faker()
 
-towns=['kiboutstim','moshavim']
+towns=[ 'haifa','Eilat']
 
 def add_town():
     s=Town.objects.get_or_create(name=random.choice(towns))[0]

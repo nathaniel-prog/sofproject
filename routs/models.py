@@ -71,6 +71,7 @@ class Appartement(models.Model):
     likes= models.ManyToManyField(User, related_name='Appart_like')
 
 
+
     def totalikes(self):
         return self.likes.count()
 

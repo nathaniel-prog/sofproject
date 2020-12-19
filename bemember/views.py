@@ -3,6 +3,7 @@ from django.contrib.auth import login as auth_login , authenticate
 from .models import Post
 from .forms import PersonForm, MyUserCreationForm
 from .models import User
+from django.http import HttpResponseRedirect
 
 
 
@@ -23,12 +24,14 @@ def register(request):
         form = MyUserCreationForm()
         return render(request, 'profile/register.html', {'form': form})
 
-    if request.method == 'POST':
-        form = MyUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()  # Saves out new user to the database
-            auth_login(request, user)
-            return redirect('home')
+    else:
+
+        if request.method == 'POST':
+            form = MyUserCreationForm(request.POST)
+            if form.is_valid():
+                user = form.save()
+                auth_login(request, user)
+            return HttpResponseRedirect('home')
 
 
 

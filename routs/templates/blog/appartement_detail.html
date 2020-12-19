@@ -20,6 +20,8 @@
 
 </div>
 
+
+
 <form action="{% url  'like_app' appartement.id   %}" method="POST">
     {%csrf_token%}
     <button type="submit", name="appart_id", value="{{appartement.id}}", class="btn btn-primary btn-sm"> like</button>{{totalikes}} likes

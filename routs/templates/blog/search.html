@@ -11,7 +11,7 @@
 <body>
 {% block content %}
 
-<h3> welcome {{user}}</h3>
+<h4> welcome {{user}}</h4>
 
 <br>
 <br>
@@ -21,7 +21,7 @@
      {%csrf_token%}
     <div class="form-group">
         <div class="col-lg-5">
-    <input type="text" name="q" class="form-control" placeholder="search">
+    <input type="text" name="q" class="form-control" placeholder="hotel's name">
         </div>
         <label class="col-lg-2">
             <button type="submit" class="btn btn-danger">Search</button>
@@ -32,6 +32,8 @@
     </form>
 
 </div>
+
+<h4> {{count}} results </h4>
 <div>
 {% if messages %}
 <ul class="message">
@@ -47,11 +49,11 @@
     {% if results %}
     {% for result in results %}
     <table>
-        <tr>
-            <td>name:{{result.name}}</td>
-            <td>cost:{{result.cost}}</td>
-            <td>town:{{result.town}}</td>
-        </tr>
+        <ul>
+            <li>Name:{{result.name}}</li>
+            <li>Cost:{{result.cost}}</li>
+            <li>Town:{{result.town}}</li>
+        </ul>
     </table>
 
     {% endfor %}

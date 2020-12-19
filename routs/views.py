@@ -20,6 +20,7 @@ from django.views.generic import ListView, DetailView , CreateView
 
 
 
+
 @login_required
 
 def home(request ):
@@ -56,12 +57,13 @@ def town(request, town_id):
 def LikeViews(request,pk):
    hot=get_object_or_404(Appartement,id=request.POST.get('appart_id'))
    hot.likes.add(request.user)
+
    return HttpResponseRedirect(reverse('appart', args=[str(pk)]))
 
 
 def Show_number(request,pk):
    hot=get_object_or_404(Appartement,id=request.POST.get('appart_id'))
-   hot.air_conditioner.add(request.user)
+   hot.address
 
    return HttpResponseRedirect(reverse('appartement', args=[str(pk)]))
 
@@ -100,14 +102,18 @@ def cheap(request):
 
 def search(request ):
 
+
     if request.method=='POST':
         query=request.POST["q"]
 
         if query:
-            qs=Hotels.objects.filter(Q(name__icontains=query)
+            qs=Hotels.objects.filter(Q(name__icontains=query)|
+                                     Q(cost__icontains=query)
+
                                )
+            resultas=qs.count()
             if qs:
-                return render(request,'blog/search.html',{'results':qs})
+                return render(request,'blog/search.html',{'results':qs,'count':resultas})
             else:
                 messages.error(request,'no result found')
         else:
@@ -165,12 +171,17 @@ def notation(request):
 
 
 def appartements(request):
+    if request.method=='POST':
+        query = request.POST["appart_id"]
+        if query:
+            qs=Appartement.objects.all()
+            if qs:
+                return render(request, 'blog/appartements.html', {'results': qs})
+
+            else:
+                 return HttpResponseRedirect('appartements')
+
     app=Appartement.objects.all().order_by('cost')
-
-
-
-
-
     return render(request,'blog/appartements.html', {'appartements':app })
 
 
@@ -256,6 +267,8 @@ class DetailAppartViews(DetailView):
         stuff = get_object_or_404(Appartement, id=self.kwargs['pk'])
         total_likes = stuff.totalikes()
         context['totalikes']= total_likes
+
+
         return context
 
 

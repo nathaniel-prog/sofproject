@@ -1,7 +1,11 @@
 from django.db import models
+from django.shortcuts import render
 from django.contrib.auth.models import User
 from bemember.models import Post
 from django.db.models import Q
+import json
+from routs.insert_geoloc import extract_lat_lng
+from django.contrib import messages
 
 import datetime
 
@@ -41,6 +45,15 @@ class Town(models.Model):
 
     def __str__(self):
         return f' {self.name} '
+
+
+    def giv_lng_latt(self):
+       if self.name=='bengourion' or 'Bengourion':
+           return extract_lat_lng(self.name)
+       else:
+           print('you are not in bg airport ')
+
+
 
 
 class Hotels(models.Model):

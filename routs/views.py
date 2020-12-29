@@ -7,9 +7,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login
 from media.images.forms import  HotelForm , AppartForm , RequestForm , PostForm
 from django.db.models import Q
+import json
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from routs.forms import TownForm
+from routs.insert_geoloc import extract_lat_lng
 from django.views.generic import ListView, DetailView , CreateView
 
 
@@ -40,6 +43,11 @@ def home(request ):
 
 
     return render(request, 'blog/home.html', context )
+
+
+
+
+
 
 def town(request, town_id):
     try:
@@ -241,6 +249,8 @@ class PostHotel(ListView):
 
 
 
+
+
 class ListAppart(ListView):
     queryset = Appartement.objects.all()
     template_name = 'blog/appartement_list.html'
@@ -272,6 +282,72 @@ class DetailAppartViews(DetailView):
         return context
 
 
+class ShowTown(ListView):
+    queryset= Town.objects.all()
+    template_name = 'blog/villelist.html'
+
+
+def select_town(request):
+    if request.method == 'POST':
+        form = TownForm(request.POST )
+        if form.is_valid():
+            form.save()
+            show_json= form.instance
+            get_json=show_json.extract_lat_lng()
+
+
+            return render(request, 'blog/select_town.html', {'form': form ,'show_json':show_json , 'get_json':get_json})
+    else:
+        form= TownForm()
+        return render(request ,'blog/select_town.html',{'form':form} )
+
+
+
+def select2(request):
+    if request.method=='Post':
+        query = request.POST.get["q"]
+        if query:
+            showjson=query.extract_lat_lng(request.user)
+            return render(request , 'blog/select2.html', {'showjson':showjson})
+
+    else:
+        return render(request, 'blog/select2.html')
+
+
+
+
+
+
+
+
+
+class ShowJsonData(DetailView):
+    model = Town
+    template_name = 'blog/showjson.html'
+
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ShowJsonData, self).get_context_data()
+        stuff = get_object_or_404(Town, id=self.kwargs['pk'])
+        call_json = stuff.giv_lng_latt()
+        context['calljson'] =call_json
+
+        return context
+
+
+
+class TestSuperFunc(ShowJsonData):
+    def __init__(self):
+        form= TownForm()
+        super(TestSuperFunc, self).get_context_data()
+
+
+
+
+
+
+
+
 
 
 
@@ -284,6 +360,14 @@ class PostCreateView(CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+
+def get_json(request, slug):
+    context={}
+    select=extract_lat_lng(slug)
+    context['select']=select
+    return render(request , 'blog/that_t.html',context)
 
 
 

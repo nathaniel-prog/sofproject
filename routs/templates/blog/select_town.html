@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<div>
+
+<form method="POST" >
+    <table>
+        {{ form }}
+    </table>
+    {% csrf_token %}
+    <button type="submit">Signup</button>
+</form>
+
+</div>
+
+{% if form %}
+
+<h2>{{ show_json}}</h2>
+
+<h2>{{ get_json}}</h2>
+
+
+{% endif %}
+
+
+
+
+</body>
+</html>

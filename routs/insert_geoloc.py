@@ -7,7 +7,7 @@ from datetime import datetime
 
 
 
-api_key='AIzaSyBhvlgznzR_nqaRxryX_HhdyF4UcMErarI'
+api_key='AIxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 #url= 'https://maps.googleapis.com/maps/api/geocode/json
 
 
